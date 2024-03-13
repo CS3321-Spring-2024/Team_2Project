@@ -1,4 +1,5 @@
 from quart import Quart, jsonify, request
+from quart_cors import cors, route_cors
 import requests
 from .POTD import *
 
@@ -20,7 +21,9 @@ async def get_wikipedia_data(keyword):
         return jsonify({'error': 'No Wikipedia page found'})
     return jsonify(data)
 
+
 @app.route('/POTD')
+@route_cors(allow_origin="*")
 async def get_potd():
     return jsonify(get_POTD_with_desc())
 

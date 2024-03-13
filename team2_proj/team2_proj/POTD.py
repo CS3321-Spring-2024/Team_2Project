@@ -53,9 +53,9 @@ class WikiData:
 
 ## construct the defualt error objects
     
-error_potd = POTD("https://commons.wikimedia.org/wiki/File:Challenger_explosion.jpg#/media/File:Challenger_explosion.jpg", "Challenger Disaster", "An error occurred while fetching the data. Much like the Challenger Disaster, this is a disaster, but much less fatal.")
-error_w1 = WikiData("Challenger Disaster", "On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds into its flight, killing all seven crew members aboard. The spacecraft disintegrated 46,000 feet (14 km) above the Atlantic Ocean, off the coast of Cape Canaveral, Florida, at 11:39 a.m. EST (16:39 UTC). It was the first fatal accident involving an American spacecraft while in flight.", None)
-error_w2 = WikiData("HTTP status codes","The server failed to fulfill a request. Response status codes beginning with the digit '5' indicate cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request.","https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_server_errors",None)
+error_potd = POTD("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Challenger_explosion.jpg/1920px-Challenger_explosion.jpg?20211117142956", "Challenger Disaster", "An error occurred while fetching the data. Much like the Challenger Disaster, this is a disaster, but much less fatal.")
+error_w1 = WikiData("Challenger Disaster", "On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds into its flight, killing all seven crew members aboard. The spacecraft disintegrated 46,000 feet (14 km) above the Atlantic Ocean, off the coast of Cape Canaveral, Florida, at 11:39 a.m. EST (16:39 UTC). It was the first fatal accident involving an American spacecraft while in flight.", "https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster","https://upload.wikimedia.org/wikipedia/commons/b/b5/Challenger_The_Final_Flight_2020.png")
+error_w2 = WikiData("HTTP status codes","The server failed to fulfill a request. Response status codes beginning with the digit '5' indicate cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request.","https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_server_errors","https://upload.wikimedia.org/wikipedia/commons/9/95/Error-Logo.png")
 error_wiki = [error_w1, error_w2]
 
 error_json = {
