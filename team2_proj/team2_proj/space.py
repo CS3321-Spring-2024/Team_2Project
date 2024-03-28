@@ -29,8 +29,14 @@ async def get_potd():
 
 @app.route("/pastPOTD/<string:date>")
 async def get_past_potd(date:str):
+    if not validate_date(date):
+        return get_potd()
     #print(f"{date} line 29")
     return jsonify(get_past_POTD_with_desc(date))
+
+@app.route('/PastPOTD')
+async def get_potd_due_to_missing_date():
+    return get_potd()
 
 @app.route("/")
 async def index():

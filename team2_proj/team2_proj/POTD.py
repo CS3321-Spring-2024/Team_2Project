@@ -24,6 +24,7 @@ class POTD:
         self.url = url
         self.title = title
         self.desc = desc
+
     
     def get_title(self) -> str:
         return self.title
@@ -52,17 +53,18 @@ class WikiData:
         return f"Title: {self.title}, Description: {self.description}, URL: {self.url}, Thumbnail: {self.thumbnail}"
 
 ## construct the defualt error objects
-    
-error_potd = POTD("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Challenger_explosion.jpg/1920px-Challenger_explosion.jpg?20211117142956", "Challenger Disaster", "An error occurred while fetching the data. Much like the Challenger Disaster, this is a disaster, but much less fatal.")
-error_w1 = WikiData("Challenger Disaster", "On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds into its flight, killing all seven crew members aboard. The spacecraft disintegrated 46,000 feet (14 km) above the Atlantic Ocean, off the coast of Cape Canaveral, Florida, at 11:39 a.m. EST (16:39 UTC). It was the first fatal accident involving an American spacecraft while in flight.", "https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster","https://upload.wikimedia.org/wikipedia/commons/b/b5/Challenger_The_Final_Flight_2020.png")
-error_w2 = WikiData("HTTP status codes","The server failed to fulfill a request. Response status codes beginning with the digit '5' indicate cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request.","https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_server_errors","https://upload.wikimedia.org/wikipedia/commons/9/95/Error-Logo.png")
-error_wiki = [error_w1, error_w2]
+def generate_error_message():
+    error_potd = POTD("https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Challenger_explosion.jpg/1920px-Challenger_explosion.jpg?20211117142956", "Challenger Disaster", "An error occurred while fetching the data. Much like the Challenger Disaster, this is a disaster, but much less fatal.")
+    error_w1 = WikiData("Challenger Disaster", "On January 28, 1986, the Space Shuttle Challenger broke apart 73 seconds into its flight, killing all seven crew members aboard. The spacecraft disintegrated 46,000 feet (14 km) above the Atlantic Ocean, off the coast of Cape Canaveral, Florida, at 11:39 a.m. EST (16:39 UTC). It was the first fatal accident involving an American spacecraft while in flight.", "https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster","https://upload.wikimedia.org/wikipedia/commons/b/b5/Challenger_The_Final_Flight_2020.png")
+    error_w2 = WikiData("HTTP status codes","The server failed to fulfill a request. Response status codes beginning with the digit '5' indicate cases in which the server is aware that it has encountered an error or is otherwise incapable of performing the request.","https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_server_errors","https://upload.wikimedia.org/wikipedia/commons/9/95/Error-Logo.png")
+    error_wiki = [error_w1, error_w2]
 
-error_json = {
-    "POTD": error_potd.__dict__,
-    "Query": "ERROR 500",
-    "WIKI_DATA": [data.__dict__ for data in error_wiki]
-}
+    error_json = {
+        "POTD": error_potd.__dict__,
+        "Query": "ERROR 500",
+        "WIKI_DATA": [data.__dict__ for data in error_wiki]
+    }
+    return error_potd, error_json
 
 ## end defualt error objects
 
@@ -80,8 +82,10 @@ def get_potd(date:str = None) -> POTD:
     }
     if date != None and validate_date(date):
         params["date"] = date
+    
     response = requests.get(baseURL, params=params)
     json_data = response.json()
+    # POTD_obj = generate_error_message()[0]
     try:                        #
         POTD_obj = POTD(json_data["url"], json_data["title"], json_data['explanation'] )
         data = json.dumps(POTD_obj.__dict__)
@@ -137,7 +141,7 @@ def get_POTD_with_desc():
         }
         return return_data
     except:
-        return error_json
+        return generate_error_message()[1]
     # return json.dumps(return_data)
 
 
@@ -165,7 +169,7 @@ def get_past_POTD_with_desc(date:str):
         }
         return return_data
     else:
-        return error_json   # add error response for invalid date (challenger?)
+        return generate_error_message()[1]   # add error response for invalid date (challenger?)
     
 
 
